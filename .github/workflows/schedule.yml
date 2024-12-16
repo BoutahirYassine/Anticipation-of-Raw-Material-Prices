@@ -23,21 +23,6 @@ jobs:
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
-    - name: Download Chromedriver
-      run: |
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | cut -d '.' -f 1)
-        echo "Detected Chrome major version: $CHROME_VERSION"
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-        if [ -z "$CHROMEDRIVER_VERSION" ]; then
-          echo "Fallback to latest Chromedriver"
-          wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-          CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE)
-        fi
-        echo "Using Chromedriver version: $CHROMEDRIVER_VERSION"
-        wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d chromedriver
-        chmod +x chromedriver/chromedriver
-
     - name: Install Python Dependencies
       run: |
         python3 -m pip install --upgrade pip
