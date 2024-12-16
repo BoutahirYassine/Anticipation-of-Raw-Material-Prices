@@ -18,19 +18,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y wget unzip xvfb libnss3 libxss1 || echo "Dependency installation fallback."
 
-    - name: Install Stable Google Chrome
-      run: |
-        sudo apt-get remove -y google-chrome-stable
-        wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.111-1_amd64.deb
-        sudo dpkg -i google-chrome-stable_116.0.5845.111-1_amd64.deb || sudo apt-get -f install -y
-
-    - name: Download ChromeDriver
-      run: |
-        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_116)
-        wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d chromedriver
-        chmod +x chromedriver/chromedriver
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -42,9 +29,6 @@ jobs:
 
     - name: Debug Chrome Version
       run: google-chrome --version
-
-    - name: Verify Chromedriver Permissions
-      run: ls -l chromedriver/chromedriver
 
     - name: Run Selenium Script
       env:
