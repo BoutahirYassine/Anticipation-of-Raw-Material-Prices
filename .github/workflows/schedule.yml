@@ -3,7 +3,7 @@ name: Run Selenium Script
 on:
   schedule:
     - cron: "*/5 * * * *"  # Run every 5 minutes
-  workflow_dispatch:         # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   selenium-job:
@@ -13,10 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Dependencies
+    - name: Add required repository and install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository universe
+        sudo apt-get update
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator3-1 || echo "Fallback: Skipping appindicator package"
 
     - name: Install Google Chrome
       run: |
@@ -26,9 +29,7 @@ jobs:
     - name: Download Chromedriver
       run: |
         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
-        echo "Chrome version: $CHROME_VERSION"
         CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-        echo "Chromedriver version: $CHROMEDRIVER_VERSION"
         wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d chromedriver
         chmod +x chromedriver/chromedriver
