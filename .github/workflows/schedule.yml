@@ -27,10 +27,15 @@ jobs:
       run: |
         pip install -r requirements.txt
 
+    - name: Set permissions for chromedriver
+      run: |
+        chmod +x ./chromedriver-linux64/chromedriver  # Adjust path if needed
+        echo $PWD
+
     - name: Debug Chrome Version
       run: google-chrome --version
 
     - name: Run Selenium Script
       env:
-        PATH: ./chromedriver:$PATH
+        PATH: ./chromedriver-linux64:$PATH
       run: python3 euro_to_dollar.py
