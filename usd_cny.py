@@ -25,7 +25,7 @@ if rate:
     data_to_add = [today_date, rate]
 
     # Step 3: Update the Excel file
-    file_name = r'DataBI\dollar_to_yuan.xlsx'
+    file_name = 'DataBI\dollar_to_yuan.xlsx'
 
     # Check if the Excel file already exists
     if os.path.exists(file_name):
