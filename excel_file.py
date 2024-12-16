@@ -7,7 +7,7 @@ from openpyxl.utils import get_column_letter
 folder_path = r'files'
 
 # Chemin du fichier Excel de destination
-output_file = r'DataBI\prix_matieres_output.xlsx'
+output_file = r'DataBI/prix_matieres_output.xlsx'
 
 # Créer des dictionnaires pour chaque source
 infolink_data = {

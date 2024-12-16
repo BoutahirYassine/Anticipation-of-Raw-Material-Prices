@@ -18,7 +18,7 @@ from selenium.webdriver.chrome.options import Options
 # Set up Selenium WebDriver
 options = Options()
 options.add_argument('--headless')  # Run in headless mode
-service = Service(r'chromedriver-win64\chromedriver.exe')  # Replace with your chromedriver path
+service = Service(r'chromedriver-win64/chromedriver.exe')  # Replace with your chromedriver path
 driver = webdriver.Chrome(service=service, options=options)
 
 # Open the webpage
@@ -39,7 +39,7 @@ if eur_usd_element.text:
     data_to_add = [today_date, eur_usd_element.text]
 
     # Step 3: Update the Excel file
-    file_name = r'DataBI\euro_to_dollar.xlsx'
+    file_name = r'DataBI/euro_to_dollar.xlsx'
 
     # Check if the Excel file already exists
     if os.path.exists(file_name):
