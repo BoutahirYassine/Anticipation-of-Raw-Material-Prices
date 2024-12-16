@@ -29,6 +29,7 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add DataBI/dollar_to_yuan.xlsx
-        git commit -m "Update Excel file with new conversion rate"
+        git add --all  # Stages all changes, including new files
+        git commit -m "Update dollar_to_yuan.xlsx with new conversion data" || echo "No changes to commit"
         git push
+
