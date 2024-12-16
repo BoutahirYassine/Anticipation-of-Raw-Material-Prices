@@ -1,4 +1,4 @@
-name: Run Euro to Dollar Script
+name: Run Selenium Script
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-script:
+  selenium-job:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,18 +15,30 @@ jobs:
 
     - name: Install dependencies
       run: |
+        # Update and install necessary libraries
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libappindicator1 libindicator7
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1
+
+    - name: Install Google Chrome
+      run: |
+        # Download and install the latest Google Chrome
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
-    - name: Download chromedriver
+    - name: Download Chromedriver
       run: |
-        wget https://chromedriver.storage.googleapis.com/115.0.5790.102/chromedriver_linux64.zip
+        # Determine Chrome version and fetch the matching Chromedriver version
+        CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
+        echo "Chrome version: $CHROME_VERSION"
+        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        echo "Chromedriver version: $CHROMEDRIVER_VERSION"
+        
+        # Download and set up Chromedriver
+        wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d chromedriver
         chmod +x chromedriver/chromedriver
 
-    - name: Run the script
+    - name: Run Selenium Script
       env:
         PATH: ./chromedriver:$PATH
       run: python euro_to_dollar.py
