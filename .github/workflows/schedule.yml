@@ -18,22 +18,18 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y wget unzip xvfb libnss3 libxss1 || echo "Dependency installation fallback."
 
-    - name: Install Google Chrome
+    - name: Install Stable Google Chrome
       run: |
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
+        sudo apt-get remove -y google-chrome-stable
+        wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_116.0.5845.111-1_amd64.deb
+        sudo dpkg -i google-chrome-stable_116.0.5845.111-1_amd64.deb || sudo apt-get -f install -y
 
-    - name: Download Chromedriver
+    - name: Download ChromeDriver
       run: |
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | cut -d '.' -f 1)
-        echo "Detected Chrome major version: $CHROME_VERSION"
-        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_116)
         wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d chromedriver-linux64
-        chmod +x chromedriver-linux64/chromedriver
-
-    - name: Add Chromedriver to PATH
-      run: echo "$PWD/chromedriver-linux64" >> $GITHUB_PATH
+        unzip chromedriver_linux64.zip -d chromedriver
+        chmod +x chromedriver/chromedriver
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -44,10 +40,13 @@ jobs:
       run: |
         pip install -r requirements.txt
 
+    - name: Debug Chrome Version
+      run: google-chrome --version
+
     - name: Verify Chromedriver Permissions
-      run: ls -l chromedriver-linux64/chromedriver
+      run: ls -l chromedriver/chromedriver
 
     - name: Run Selenium Script
       env:
-        PATH: ./chromedriver-linux64:$PATH
+        PATH: ./chromedriver:$PATH
       run: python3 euro_to_dollar.py
