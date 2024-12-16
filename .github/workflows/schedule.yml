@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: "*/5 * * * *"  # Runs every 5 minutes
   workflow_dispatch:
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -21,22 +22,26 @@ jobs:
       run: |
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
-    - name: Checkout repository
-      uses: actions/checkout@v3
+
+    - name: Download Chromedriver
+      run: |
+        wget https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip -d chromedriver
+        chmod +x chromedriver/chromedriver  # Grant execution permissions
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10.11'
 
-    - name: Install dependencies
+    - name: Install Python Dependencies
       run: |
         pip install -r requirements.txt
 
-    - name: Run script
+    - name: Run USD to CNY Script
       run: |
         python usd_cny.py
-        
+
     - name: Run Selenium Script
       env:
         PATH: ./chromedriver:$PATH
