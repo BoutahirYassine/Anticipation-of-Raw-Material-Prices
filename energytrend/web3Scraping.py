@@ -46,7 +46,7 @@ from datetime import datetime
 # Obtenir la date actuelle sous forme de chaîne au format "YYYY-MM-DD"
 current_date = datetime.now().strftime("%Y-%m-%d")
 # Nom du fichier avec la date
-filename = f'files\energytrend_{current_date}.xlsx'
+filename = f'files/energytrend_{current_date}.xlsx'
 
 if os.path.isfile(filename):
     print("fichier existant")
