@@ -1,10 +1,9 @@
-name: Run Python script every 2 hours
+name: Runs every 5 minutes
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # Run every 5 minutes
-  workflow_dispatch:         # Allow manual triggers
-
+    - cron: "*/5 * * * *"  # Runs every 5 minutes
+  workflow_dispatch:       # Allow manual triggers
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -25,3 +24,11 @@ jobs:
     - name: Run script
       run: |
         python usd_cny.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add DataBI/dollar_to_yuan.xlsx
+        git commit -m "Update Excel file with new conversion rate"
+        git push
