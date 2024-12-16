@@ -44,7 +44,6 @@ jobs:
 
     - name: Run Selenium Script
       env:
-        PATH: ./chromedriver:$PATH
       run: python3 euro_to_dollar.py
     - name: Verify Chromedriver Permissions
       run: |
