@@ -16,7 +16,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libappindicator3-1 || echo "Fallback on alternative dependencies."
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 || echo "Dependency installation fallback."
 
     - name: Install Google Chrome
       run: |
@@ -28,6 +28,11 @@ jobs:
         CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | cut -d '.' -f 1)
         echo "Detected Chrome major version: $CHROME_VERSION"
         CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+        if [ -z "$CHROMEDRIVER_VERSION" ]; then
+          echo "Fallback to latest Chromedriver"
+          wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+          CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE)
+        fi
         echo "Using Chromedriver version: $CHROMEDRIVER_VERSION"
         wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d chromedriver
