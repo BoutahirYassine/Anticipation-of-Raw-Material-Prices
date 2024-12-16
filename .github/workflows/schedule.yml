@@ -43,8 +43,8 @@ jobs:
         python usd_cny.py
 
     - name: Run Selenium Script
-      env:
-      run: python3 euro_to_dollar.py
+      run: |
+        python3 euro_to_dollar.py
     - name: Verify Chromedriver Permissions
       run: |
         ls -l chromedriver/chromedriver
