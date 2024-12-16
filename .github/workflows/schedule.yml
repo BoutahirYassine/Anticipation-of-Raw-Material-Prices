@@ -1,4 +1,4 @@
-name: Run Python script every 5 minutes
+name: Run Selenium Script
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script:
+  selenium-job:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,9 +25,15 @@ jobs:
 
     - name: Download Chromedriver
       run: |
-        wget https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d chromedriver
-        chmod +x chromedriver/chromedriver  # Grant execution permissions
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | cut -d '.' -f 1)
+        echo "Detected Chrome major version: $CHROME_VERSION"
+        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip -d chromedriver-linux64
+        chmod +x chromedriver-linux64/chromedriver
+
+    - name: Add Chromedriver to PATH
+      run: echo "$PWD/chromedriver-linux64" >> $GITHUB_PATH
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -38,14 +44,10 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Run USD to CNY Script
-      run: |
-        python usd_cny.py
+    - name: Verify Chromedriver Permissions
+      run: ls -l chromedriver-linux64/chromedriver
 
     - name: Run Selenium Script
-      run: |
-        python3 euro_to_dollar.py
-    - name: Verify Chromedriver Permissions
-      run: |
-        ls -l chromedriver/chromedriver
-
+      env:
+        PATH: ./chromedriver-linux64:$PATH
+      run: python3 euro_to_dollar.py
