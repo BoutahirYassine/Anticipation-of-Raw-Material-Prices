@@ -39,3 +39,14 @@ jobs:
       env:
         PATH: ./chromedriver-linux64:$PATH
       run: python3 euro_to_dollar.py
+      
+    - name: Run Selenium Script
+      run: python3 usd_cny.py
+      
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add --all
+        git commit -m "Updated change rate" || echo "No changes to commit"
+        git push
