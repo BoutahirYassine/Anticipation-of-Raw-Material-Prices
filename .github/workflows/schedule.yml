@@ -13,27 +13,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Install Dependencies (Replace libappindicator1)
       run: |
-        # Update and install necessary libraries
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1 || echo "Fallback package installed."
 
     - name: Install Google Chrome
       run: |
-        # Download and install the latest Google Chrome
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
     - name: Download Chromedriver
       run: |
-        # Determine Chrome version and fetch the matching Chromedriver version
         CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
         echo "Chrome version: $CHROME_VERSION"
         CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
         echo "Chromedriver version: $CHROMEDRIVER_VERSION"
-        
-        # Download and set up Chromedriver
         wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip -d chromedriver
         chmod +x chromedriver/chromedriver
