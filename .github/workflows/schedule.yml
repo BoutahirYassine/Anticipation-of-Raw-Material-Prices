@@ -20,10 +20,15 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-
+    - name: Vérifier la version de Google Chrome
+      run: google-chrome --version
     - name: Run script
       run: |
         python usd_cny.py
+        
+    - name: Run script
+      run: |
+        python euro_to_dollar.py
 
     - name: Commit and push changes
       run: |

@@ -18,7 +18,7 @@ from selenium.webdriver.chrome.options import Options
 # Set up Selenium WebDriver
 options = Options()
 options.add_argument('--headless')  # Run in headless mode
-service = Service(r'chromedriver-win64/chromedriver.exe')  # Replace with your chromedriver path
+service = Service('chromedriver-linux64/chromedriver')  # Replace with your chromedriver path
 driver = webdriver.Chrome(service=service, options=options)
 
 # Open the webpage
