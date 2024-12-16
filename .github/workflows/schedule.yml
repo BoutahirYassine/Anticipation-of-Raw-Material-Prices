@@ -3,7 +3,7 @@ name: Run Selenium Script
 on:
   schedule:
     - cron: "*/5 * * * *"  # Run every 5 minutes
-  workflow_dispatch:  
+  workflow_dispatch:         # Allow manual trigger
 
 jobs:
   selenium-job:
@@ -13,10 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Dependencies (Replace libappindicator1)
+    - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1 || echo "Fallback package installed."
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 libayatana-appindicator1
 
     - name: Install Google Chrome
       run: |
@@ -33,7 +33,12 @@ jobs:
         unzip chromedriver_linux64.zip -d chromedriver
         chmod +x chromedriver/chromedriver
 
+    - name: Install Python Dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install -r requirements.txt
+
     - name: Run Selenium Script
       env:
         PATH: ./chromedriver:$PATH
-      run: python euro_to_dollar.py
+      run: python3 euro_to_dollar.py
