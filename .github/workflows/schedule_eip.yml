@@ -28,11 +28,18 @@ jobs:
         pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run Batch File with Wine
-      run: |
-        echo "Running Windows batch file on Ubuntu with Wine..."
-        wine cmd /c SolarData.bat
+    - name: Run  infolink_group
+      run: python infolink_group/web1Scraping.py
 
+    - name: Run  pvinsights
+      run: python python pvinsights/web2Scraping.py
+      
+    - name: Run  energytrend
+      run: python python energytrend/web3Scraping.py
+      
+    - name: Run  excel_file
+      run: python excel_file.py
+      
     - name: Commit and push changes
       run: |
         git config --global user.name "github-actions[bot]"
