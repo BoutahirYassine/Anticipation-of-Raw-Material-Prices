@@ -32,10 +32,10 @@ jobs:
       run: python infolink_group/web1Scraping.py
 
     - name: Run  pvinsights
-      run: python python pvinsights/web2Scraping.py
+      run: python pvinsights/web2Scraping.py
       
     - name: Run  energytrend
-      run: python python energytrend/web3Scraping.py
+      run: python energytrend/web3Scraping.py
       
     - name: Run  excel_file
       run: python excel_file.py
