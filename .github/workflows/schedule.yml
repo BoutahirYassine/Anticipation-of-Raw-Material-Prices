@@ -38,10 +38,7 @@ jobs:
     - name: Run Selenium Script
       env:
         PATH: ./chromedriver-linux64:$PATH
-      run: python3 euro_to_dollar.py
-      
-    - name: Run Selenium Script
-      run: python3 usd_cny.py
+      run: python3 EUR_USD_CNY.py
       
     - name: Commit and push changes
       run: |
