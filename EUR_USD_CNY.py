@@ -40,7 +40,7 @@ for tablee in urlr:
     # Configurer WebDriver
     chrome_options = Options()
     chrome_options.add_argument("--headless")  # Exécuter sans interface graphique
-    service = Service("chromedriver-win64/chromedriver.exe")  # Remplacez par le chemin de chromedriver
+    service = Service("chromedriver-linux64/chromedriver")  # Remplacez par le chemin de chromedriver
     driver = webdriver.Chrome(service=service, options=chrome_options)
     
     # Charger la page
