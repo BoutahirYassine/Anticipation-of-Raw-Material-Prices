@@ -38,7 +38,9 @@ jobs:
     - name: Run Selenium Script
       env:
         PATH: ./chromedriver-linux64:$PATH
-      run: python3 EUR_USD_CNY.py
+        run: |
+          python3 EUR_USD_CNY.py
+          python3 pi.py
       
     - name: Commit and push changes
       run: |
