@@ -23,7 +23,7 @@ jobs:
         pip install openpyxl requests beautifulsoup4
 
     - name: Run Argent Price Script
-      run: python3 argent_price_update.py
+      run: python3 argent.py
 
     - name: Commit and push changes
       run: |
