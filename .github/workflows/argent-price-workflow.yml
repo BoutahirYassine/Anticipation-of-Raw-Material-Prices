@@ -1,0 +1,34 @@
+name: Argent Price Update
+
+on:
+  schedule:
+    - cron: "0 */3 * * *" # Exécute toutes les 3 heures
+  workflow_dispatch: # Permet de déclencher manuellement
+
+jobs:
+  argent-price-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        pip install openpyxl requests beautifulsoup4
+
+    - name: Run Argent Price Script
+      run: python3 argent_price_update.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add --all
+        git commit -m "Updated Argent prices in Excel" || echo "No changes to commit"
+        git push
