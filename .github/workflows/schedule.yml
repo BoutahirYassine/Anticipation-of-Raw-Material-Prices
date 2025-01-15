@@ -35,14 +35,10 @@ jobs:
     - name: Debug Chrome Version
       run: google-chrome --version
 
-    - name: Run Selenium Script EUR USD CNY
+    - name: Run Selenium Script
       env:
         PATH: ./chromedriver-linux64:$PATH
       run: python3 EUR_USD_CNY.py
-    - name: Run Selenium Script Argent
-      env:
-        PATH: ./chromedriver-linux64:$PATH
-      run: python3 argent.py
       
     - name: Commit and push changes
       run: |
