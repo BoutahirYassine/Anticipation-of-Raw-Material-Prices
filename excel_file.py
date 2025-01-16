@@ -69,26 +69,18 @@ for filename in os.listdir(folder_path):
             # Supposons que le format est "energytrend_YYYY-MM-DD.xlsx"
             file_date_str = filename.split('_')[1].split('.')[0]  # "2024-10-21"
             file_date = datetime.strptime(file_date_str, "%Y-%m-%d")  # Conversion en objet datetime
-            
+            print(file_date)
             # Date limite
             limit_date = datetime.strptime("2024-12-17", "%Y-%m-%d")
             
             # Vérifier si la date du fichier est avant la date limite
             if file_date <= limit_date:
-                # Charger le fichier Excel
-                workbook = load_workbook(filename)
-                sheet = workbook.active  # Assurez-vous que la feuille active est correcte
-                
                 # Lire les valeurs des cellules spécifiques
                 energytrend_value1 = sheet.cell(row=6, column=2).value
                 energytrend_value2 = sheet.cell(row=13, column=2).value
                 energytrend_value3 = sheet.cell(row=21, column=2).value
                 energytrend_value4 = sheet.cell(row=29, column=2).value
             else : 
-                # Charger le fichier Excel
-                workbook = load_workbook(filename)
-                sheet = workbook.active  # Assurez-vous que la feuille active est correcte
-                
                 # Lire les valeurs des cellules spécifiques
                 energytrend_value1 = sheet.cell(row=4, column=2).value
                 energytrend_value2 = sheet.cell(row=12, column=2).value
