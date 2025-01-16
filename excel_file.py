@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-
+from datetime import datetime
 # Chemin du dossier contenant les fichiers Excel
 folder_path = r'files'
 
@@ -65,16 +65,36 @@ for filename in os.listdir(folder_path):
             infolink_data['182*182-210mm/210mm Mono TOPCon - EU (USD)'].append(infolink_value4)
         
         elif filename.startswith('energytrend'):
-            energytrend_value1 = sheet.cell(row=6, column=2).value
-            energytrend_value2 = sheet.cell(row=13, column=2).value
-            energytrend_value3 = sheet.cell(row=21, column=2).value
-            energytrend_value4 = sheet.cell(row=29, column=2).value
+            # Extraire la date du nom du fichier
+            # Supposons que le format est "energytrend_YYYY-MM-DD.xlsx"
+            file_date_str = filename.split('_')[1].split('.')[0]  # "2024-10-21"
+            file_date = datetime.strptime(file_date_str, "%Y-%m-%d")  # Conversion en objet datetime
             
-            # energytrend_value1 = [sheet.cell(row=6, column=2).value,sheet.cell(row=6, column=3).value,sheet.cell(row=6, column=4).value]
-            # energytrend_value2 = [sheet.cell(row=13, column=2).value,sheet.cell(row=13, column=3).value,sheet.cell(row=13, column=4).value]
-            # energytrend_value3 = [sheet.cell(row=21, column=2).value,sheet.cell(row=21, column=3).value,sheet.cell(row=21, column=4).value]
-            # energytrend_value4 = [sheet.cell(row=29, column=2).value,sheet.cell(row=29, column=3).value,sheet.cell(row=29, column=4).value]
+            # Date limite
+            limit_date = datetime.strptime("2024-12-17", "%Y-%m-%d")
             
+            # Vérifier si la date du fichier est avant la date limite
+            if file_date <= limit_date:
+                # Charger le fichier Excel
+                workbook = load_workbook(filename)
+                sheet = workbook.active  # Assurez-vous que la feuille active est correcte
+                
+                # Lire les valeurs des cellules spécifiques
+                energytrend_value1 = sheet.cell(row=6, column=2).value
+                energytrend_value2 = sheet.cell(row=13, column=2).value
+                energytrend_value3 = sheet.cell(row=21, column=2).value
+                energytrend_value4 = sheet.cell(row=29, column=2).value
+            else : 
+                # Charger le fichier Excel
+                workbook = load_workbook(filename)
+                sheet = workbook.active  # Assurez-vous que la feuille active est correcte
+                
+                # Lire les valeurs des cellules spécifiques
+                energytrend_value1 = sheet.cell(row=4, column=2).value
+                energytrend_value2 = sheet.cell(row=12, column=2).value
+                energytrend_value3 = sheet.cell(row=20, column=2).value
+                energytrend_value4 = sheet.cell(row=28, column=2).value
+
             energytrend_data['Date'].append(date_str)
             energytrend_data['NType Polysilicon (RMB)'].append(energytrend_value1)
             energytrend_data['NType M10 Mono Wafer -182mm/130μm (RMB)'].append(energytrend_value2)
