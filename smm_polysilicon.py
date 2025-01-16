@@ -12,7 +12,7 @@ from openpyxl import Workbook, load_workbook
 import os
 
 # URL of the page
-url = "https://www.metal.com/en/prices/202501060001"  # Replace with the actual URL
+url = "https://www.metal.com/en/prices/202501060003"  # Replace with the actual URL
 
 # Send a request to fetch the HTML content of the page
 response = requests.get(url)
