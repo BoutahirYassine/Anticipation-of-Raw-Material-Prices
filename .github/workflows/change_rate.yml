@@ -1,4 +1,4 @@
-name: Run every 3 hours
+name: USD_CNY_EUR every 3 hours
 
 on:
   schedule:
