@@ -33,7 +33,7 @@ if response.status_code == 200:
         today_date = datetime.now().strftime("%Y-%m-%d")
 
         # Define the Excel file name
-        excel_file = "DataBI/N_Dense_Polysilicon.xlsx"
+        excel_file = "DataBI/N_Type_Polysilicon.xlsx"
 
         # Check if the file exists
         if os.path.exists(excel_file):
