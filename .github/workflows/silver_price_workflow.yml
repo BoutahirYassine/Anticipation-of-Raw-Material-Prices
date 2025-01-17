@@ -1,4 +1,4 @@
-name: Argent Price Update
+name: Silver Price Update
 
 on:
   schedule:
