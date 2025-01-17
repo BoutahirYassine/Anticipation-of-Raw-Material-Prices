@@ -6,24 +6,28 @@ on:
     - cron: "0 */3 * * *"
   workflow_dispatch: # Allows manual trigger of the workflow
     inputs: {}
+
 jobs:
-  run-script:
+  fetch-price:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: "3.9"  # Specify your Python version
 
-      - name: Install dependencies
+      # Step 3: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt # S'assurer que ce fichier existe dans le repo
+          pip install -r requirements.txt  # Ensure you have a requirements.txt file with all dependencies
 
       - name: Run the script
         run: |
-          python3 cuivre.py # Remplacez par le nom de votre script
+          python cuivre.py 
