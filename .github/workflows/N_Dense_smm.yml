@@ -1,4 +1,4 @@
-name: Fetch N-Dense Polysilicon Price
+name: N_type Polysilicon Price
 
 on:
   schedule:
