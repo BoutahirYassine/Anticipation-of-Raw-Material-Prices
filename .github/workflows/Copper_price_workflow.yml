@@ -2,8 +2,10 @@ name: Copper Price (Every 6 Hours)
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # Exécution toutes les 6 heures
-
+    # Schedule to run every 3 hours
+    - cron: "0 */3 * * *"
+  workflow_dispatch: # Allows manual trigger of the workflow
+    inputs: {}
 jobs:
   run-script:
     runs-on: ubuntu-latest
