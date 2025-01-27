@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Charger les fichiers Excel
-argent_file = "DataBI/cotations_Cuivre.xlsx"
-conversion_file = "DataBI/EUR_USD.xlsx"
+argent_file = "DataBI/N_Type_Polysilicon.xlsx"
+conversion_file = "DataBI/USD_CNY.xlsx"
 
 argent_data = pd.read_excel(argent_file)
 conversion_data = pd.read_excel(conversion_file)
@@ -23,7 +23,7 @@ conversion_data = conversion_data.dropna(subset=['date'])
 merged_data = pd.merge(argent_data, conversion_data, on="date", how="inner")
 
 # Enregistrer dans un nouveau fichier Excel
-output_file = "DataBI/Cu_Conversion.xlsx"
+output_file = "DataBI/Conversionn.xlsx"
 merged_data.to_excel(output_file, index=False)
 
 print(f"Les données fusionnées ont été enregistrées dans '{output_file}'.")
