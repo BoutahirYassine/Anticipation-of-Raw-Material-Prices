@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Charger les fichiers Excel
-argent_file = "DataBI/N_Type_Polysilicon.xlsx"
+argent_file = "DataBI/Prix_cellule.xlsx"
 conversion_file = "DataBI/USD_CNY.xlsx"
 
 argent_data = pd.read_excel(argent_file)
