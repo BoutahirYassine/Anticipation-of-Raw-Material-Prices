@@ -19,7 +19,7 @@ from openpyxl import Workbook, load_workbook
 import os
 
 # URL of the page
-url = "https://www.metal.com/fr/prices/202210280001"  # Replace with the actual URL
+url = "https://www.metal.com/en/prices/202210280001"  # Replace with the actual URL
 
 # Send a request to fetch the HTML content of the page
 response = requests.get(url)
@@ -28,7 +28,7 @@ if response.status_code == 200:
     # Parse the HTML content with BeautifulSoup
     soup = BeautifulSoup(response.content, 'html.parser')
     # Locate the div containing "Données brutes"
-    brut_section = soup.find('div', text='TVA incluse')
+    brut_section = soup.find('div', text='VAT included')
     if brut_section:
         # Find the parent div and extract the price
         price_element = brut_section.find_next('div', class_='PriceDisplay_price__VYiMd')
