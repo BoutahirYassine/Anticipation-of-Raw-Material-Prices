@@ -69,8 +69,6 @@ for filename in os.listdir(folder_path):
             # Supposons que le format est "energytrend_YYYY-MM-DD.xlsx"
             file_date_str = filename.split('_')[1].split('.')[0]  # "2024-10-21"
             file_date = datetime.strptime(file_date_str, "%Y-%m-%d")  # Conversion en objet datetime
-            print(file_date)
-            # Date limite
             limit_date = datetime.strptime("2024-12-17", "%Y-%m-%d")
             
             # Vérifier si la date du fichier est avant la date limite
