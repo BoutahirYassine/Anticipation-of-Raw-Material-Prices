@@ -34,7 +34,7 @@ print(f"Dernière valeur ({latest_date}): {latest_price}")
 print(f"Avant-dernière valeur ({previous_date}): {previous_price}")
 
 # Nom du fichier Excel
-file_name = "DataBI/Argent.xlsx"
+file_name = "DataBI/Argent_USD.xlsx"
 
 # Vérifier si le fichier existe, sinon le créer
 if not os.path.exists(file_name):
