@@ -1,4 +1,4 @@
-name: Silver Price Update
+name: Aluminium Price Update
 
 on:
   schedule:
