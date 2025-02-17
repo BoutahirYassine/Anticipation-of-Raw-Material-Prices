@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Charger les fichiers Excel
-argent_file = "output_interpolé.xlsx"
+argent_file = "DataBI/wafer_m10.xlsx"
 conversion_file = "DataBI/USD_CNY.xlsx"
 
 argent_data = pd.read_excel(argent_file)
