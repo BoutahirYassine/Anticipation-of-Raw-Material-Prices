@@ -1,0 +1,48 @@
+Project: Extracting Solar PV Price Index Data
+Overview
+The goal of this project is to automate the process of extracting Solar PV Price Index data from weekly articles published on LinkedIn. This will include:
+
+Searching for Articles: Identifying articles with titles starting with “SOLAR PV PRICE INDEX - WEEK.”
+Extracting Price Index Image: Searching for and extracting the image containing the price index data from the articles.
+Storing the Image Locally: Downloading and saving the extracted images on the local system.
+Converting Image Data to Excel: Using Optical Character Recognition (OCR) to extract text from the image and convert it into a structured Excel format for analysis.
+Step-by-Step Process
+Step 1: Searching for Articles with Specific Titles
+
+Objective: Identify articles on LinkedIn with titles that match the pattern: “SOLAR PV PRICE INDEX - WEEK.”
+Tools: Web scraping tools (e.g., BeautifulSoup, Selenium) to search for relevant articles on LinkedIn or specific websites.
+Description:
+Use LinkedIn’s search feature or an API to filter articles by title.
+The goal is to automatically identify and list all articles with the specific format “SOLAR PV PRICE INDEX - WEEK.”
+Step 2: Extracting the Price Index Image
+
+Objective: Extract the image with the price index from each article.
+Tools: Web scraping tools, XPath, CSS selectors.
+Description:
+Once the correct articles are identified, search the page’s HTML for an image element that contains the price index.
+Focus on the visual representation of the price index graph or table.
+Extract the URL or source link for the image.
+Step 3: Storing the Image Locally
+
+Objective: Save the extracted image to the local file system.
+Tools: Python (requests or urllib), File I/O operations.
+Description:
+Download the image from its URL and save it locally in a specific directory.
+Use a meaningful filename (e.g., “solar_price_index_week48.png”) to easily identify each image.
+Step 4: Converting the Image Data to Excel
+
+Objective: Use OCR to extract text data from the image and convert it into an Excel file.
+Tools: OCR (e.g., Tesseract), Pandas, Openpyxl.
+Description:
+Apply OCR (e.g., Tesseract) to the stored image to extract the numerical price index data.
+Clean and format the extracted data into a structured format, such as a table.
+Use Pandas to organize the data and Openpyxl to export it into an Excel file.
+Project Deliverables
+A list of weekly articles with the “SOLAR PV PRICE INDEX - WEEK” title.
+A collection of images representing the price index data.
+An Excel file containing the extracted price index data.
+Expected Outcomes
+Automated extraction of price index data.
+Organized Excel files for easy analysis and reporting.
+Conclusion
+This project will help streamline the process of tracking Solar PV price indices over time, improving data access and analysis efficiency. By automating the extraction, storing, and conversion of these data points, the project can serve as a robust tool for industry professionals monitoring price trends.
