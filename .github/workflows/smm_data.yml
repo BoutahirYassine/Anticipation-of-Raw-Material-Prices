@@ -1,4 +1,4 @@
-name: N_type Polysilicon Price
+name: SMM_DATA
 
 on:
   schedule:
