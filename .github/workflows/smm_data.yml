@@ -30,7 +30,7 @@ jobs:
 
       # Step 4: Run the script
       - name: Run Fetch Script
-        run: python DataBI\SMM\smmSolar.py
+        run: python DataBI/SMM/smmSolar.py
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
