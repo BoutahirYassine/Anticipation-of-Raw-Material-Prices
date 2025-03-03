@@ -42,7 +42,17 @@ def fetch_price(url):
             brut_section = soup.find('div', text='Original')
             if brut_section:
                 # Find the parent div and extract the price Silver Rear side
-                price_element = brut_section.find_next('div', class_='PriceDisplay_price__VYiMd')
+                price_element = brut_section.find_next('div', class_='price___2mpJr')
+        elif url == "https://www.metal.com/Solar/202112230004":
+            brut_section = soup.find('div', text='Original')
+            if brut_section:
+                # Find the parent div and extract the price Silver busbar front-side
+                price_element = brut_section.find_next('div', class_='price___2mpJr')
+        elif url == "https://www.metal.com/Solar/202112230005":
+            brut_section = soup.find('div', text='Original')
+            if brut_section:
+                # Find the parent div and extract the price Silver Finger Front-side 
+                price_element = brut_section.find_next('div', class_='price___2mpJr')
         # Find the parent div and extract the price USD/CNY
         elif url == "https://www.metal.com/exchange-rate/200002250101":
             price_element = soup.find("span", class_="strong___Js3_I priceDown___2TbRQ")
@@ -95,6 +105,8 @@ def main():
     update_excel("Cell Topcon 183mm", "https://www.metal.com/en/prices/202210280001", workbook)
     update_excel("Module Topcon 183mm", "https://www.metal.com/Solar/202403260002", workbook)
     update_excel("Silver Rear_side", "https://www.metal.com/Solar/202112230003", workbook)
+    update_excel("Silver Busbar front-side", "https://www.metal.com/Solar/202112230004", workbook)
+    update_excel("Silver finger front-side", "https://www.metal.com/Solar/202112230005", workbook)
     update_excel("USD_CNY", "https://www.metal.com/exchange-rate/200002250101", workbook)
     
     workbook.save(excel_file)
