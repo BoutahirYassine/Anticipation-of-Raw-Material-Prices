@@ -1,0 +1,34 @@
+​Les différentes pâtes d'argent utilisées dans les cellules solaires se distinguent par leur composition et leur application spécifique sur la cellule. Voici un aperçu des principales différences :​
+
+1. Pâte d'argent pour le côté arrière de la cellule solaire (Rear-side Silver Paste)
+Emplacement : Appliquée sur la face arrière de la cellule solaire.​
+Fonction : Assure la collecte du courant généré et peut améliorer la réflexion de la lumière, augmentant ainsi l'efficacité de la cellule.​
+Caractéristiques :
+Doit avoir une bonne conductivité électrique et une faible susceptibilité à l'oxydation.
+Peut contenir des composants optimisés pour l'adhérence et la conduction sur la couche arrière.
+Référence : Selon une étude, la pâte d'argent est utilisée sur les deux faces des cellules n-TOPCon, contrairement aux cellules PERC qui utilisent une pâte d'aluminium sur la face arrière. ​
+https://www.pv-tech.org/industry-updates/prospects-for-metallization-paste-technology-in-the-passivated-contact-era/
+
+
+
+
+2. Pâte d'argent pour les busbars de la face avant (Busbar Front-side Silver Paste)
+Emplacement : Appliquée sur la face avant de la cellule solaire pour former les busbars.​
+Fonction : Les busbars sont des bandes plus épaisses qui collectent le courant des fingers et le transportent vers l'extérieur de la cellule.​
+Caractéristiques :
+Nécessite une forte conductivité pour minimiser les pertes d'énergie.
+Doit être compatible avec les matériaux de la cellule pour assurer une bonne adhérence et une faible résistance de contact.
+Référence : Les busbars traditionnels augmentent l'utilisation de pâte d'argent et peuvent bloquer une partie de la lumière solaire, ce qui limite l'efficacité de la génération d'énergie
+https://www.maysunsolar.com/blog-what-is-0-busbar-0bb-solar-cell-technology/
+
+
+
+
+3. Pâte d'argent pour les fingers de la face avant (Finger Front-side Silver Paste)
+Emplacement : Appliquée sur la face avant de la cellule solaire pour former les fingers.​
+Fonction : Les fingers sont des lignes fines qui collectent le courant électrique généré par la cellule et le transmettent aux busbars.​
+Caractéristiques :
+Doit permettre une impression précise de lignes fines pour minimiser l'ombrage et maximiser la collecte de courant.
+Doit offrir une bonne conductivité électrique tout en utilisant une quantité minimale d'argent pour réduire les coûts.
+Référence : Les fingers collectent le courant de la face avant de la cellule solaire et le transmettent aux busbars, où il peut être acheminé vers le circuit externe.
+https://www.pv-magazine.com/2022/07/20/novel-busbar-free-cell-design-for-shingled-solar-modules/
