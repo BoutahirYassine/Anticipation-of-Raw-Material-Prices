@@ -55,12 +55,18 @@ def fetch_price(url):
                 price_element = brut_section.find_next('div', class_='price___2mpJr')
         # Find the parent div and extract the price USD/CNY
         elif url == "https://www.metal.com/exchange-rate/200002250101":
-            price_element = soup.find("span", class_="strong___Js3_I priceDown___2TbRQ")
+            price_element1 = soup.find("span", class_="strong___Js3_I priceDown___2TbRQ")
+            price_element2 = soup.find("span", class_="strong___Js3_I priceUp___3Mgsl")
+            if price_element1:
+                price_element = price_element1
+            else:
+                price_element = price_element2
+            
         # Find the parent div and extract the price MODULE
         elif url == "https://www.metal.com/Solar/202403260002":
             price_element = soup.find("span", class_="strong___3sC58")
         else:
-            price_element = soup.find('span', class_='strong___3sC58 priceUp___3Mgsl')
+            price_element = soup.find('span', class_='strong___3sC58')
         if price_element:
             return price_element.text.strip()
     return None
@@ -92,7 +98,7 @@ def update_excel(sheet_name, url, workbook):
 
 def main():
     excel_file = "DataBI/SMM/Solar_Prices.xlsx"
-    
+    #excel_file = "Solar_Prices2.xlsx"
     if os.path.exists(excel_file):
         workbook = load_workbook(excel_file)
     else:
