@@ -91,7 +91,7 @@ def update_excel(sheet_name, url, workbook):
         print(f"Failed to fetch price for {sheet_name}")
 
 def main():
-    excel_file = "Solar_Prices.xlsx"
+    excel_file = "DataBI/SMM/Solar_Prices.xlsx"
     
     if os.path.exists(excel_file):
         workbook = load_workbook(excel_file)
