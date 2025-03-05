@@ -30,35 +30,44 @@ def fetch_price(url):
         soup = BeautifulSoup(response.content, 'html.parser')
         if url == "https://www.metal.com/Solar/202303220001":
             brut_section = soup.find('div', text='Original')
-            if brut_section:
-                # Find the parent div and extract the price WAFER
-                price_element = brut_section.find_next('div', class_='price___2mpJr')
+            if brut_section:              
+                price_element = brut_section.find_next('div', class_='price___2mpJr')               # price WAFER
+                
+                
         elif url == "https://www.metal.com/en/prices/202210280001":
             brut_section = soup.find('div', text='Original')
             if brut_section:
-                # Find the parent div and extract the price CELL
-                price_element = brut_section.find_next('div', class_='PriceDisplay_price__VYiMd')
+                price_element = brut_section.find_next('div', class_='PriceDisplay_price__VYiMd')  #price CELL
+                
+                
         elif url == "https://www.metal.com/Solar/202112230003":
             brut_section = soup.find('div', text='Original')
             if brut_section:
-                # Find the parent div and extract the price Silver Rear side
-                price_element = brut_section.find_next('div', class_='price___2mpJr')
+                price_element = brut_section.find_next('div', class_='price___2mpJr')               #Silver Rear side
+                
+                
         elif url == "https://www.metal.com/Solar/202112230004":
             brut_section = soup.find('div', text='Original')
             if brut_section:
-                # Find the parent div and extract the price Silver busbar front-side
-                price_element = brut_section.find_next('div', class_='price___2mpJr')
+                price_element = brut_section.find_next('div', class_='price___2mpJr')              # Silver busbar front-side
+                
+                
         elif url == "https://www.metal.com/Solar/202112230005":
             brut_section = soup.find('div', text='Original')
             if brut_section:
-                # Find the parent div and extract the price Silver Finger Front-side 
-                price_element = brut_section.find_next('div', class_='price___2mpJr')
-        # Find the parent div and extract the price USD/CNY
+                price_element = brut_section.find_next('div', class_='price___2mpJr')              #Silver Finger Front-side 
+                
+                
+        # USD/CNY
         elif url == "https://www.metal.com/exchange-rate/200002250101":
             price_element1 = soup.find("span", class_="strong___Js3_I priceDown___2TbRQ")
             price_element2 = soup.find("span", class_="strong___Js3_I priceUp___3Mgsl")
+            price_element3 = soup.find("span", class_="strong___3sC58 priceUp___3Mgsl")
+            
             if price_element1:
                 price_element = price_element1
+            elif price_element3:
+                price_element = price_element3
             else:
                 price_element = price_element2
             
@@ -107,7 +116,7 @@ def main():
     
     update_excel("N-Dense", "https://www.metal.com/Solar/202501060001", workbook)
     update_excel("N-Type", "https://www.metal.com/Solar/202501060003", workbook)
-    update_excel("N-type Wafer", "https://www.metal.com/Solar/202303220001", workbook)
+    update_excel("N-type Wafer", "https://www.metal.com/Solar/202303220001", workbook) ##
     update_excel("Cell Topcon 183mm", "https://www.metal.com/en/prices/202210280001", workbook)
     update_excel("Module Topcon 183mm", "https://www.metal.com/Solar/202403260002", workbook)
     update_excel("Silver Rear_side", "https://www.metal.com/Solar/202112230003", workbook)
