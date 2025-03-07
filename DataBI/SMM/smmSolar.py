@@ -75,7 +75,10 @@ def fetch_price(url):
         elif url == "https://www.metal.com/Solar/202403260002":
             price_element = soup.find("span", class_="strong___3sC58")
         else:
-            price_element = soup.find('span', class_='strong___3sC58')
+            brut_section = soup.find('div', text='Original')
+            if brut_section:
+                price_element = brut_section.find_next('div', class_='price___2mpJr') 
+                
         if price_element:
             return price_element.text.strip()
     return None
