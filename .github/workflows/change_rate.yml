@@ -2,7 +2,7 @@ name: USD_CNY_EUR every 3 hours
 
 on:
   schedule:
-    - cron: "0 */8 * * *" 
+    - cron: "0 */3 * * *" 
   workflow_dispatch:
 
 jobs:
