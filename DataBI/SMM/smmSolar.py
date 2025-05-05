@@ -83,30 +83,46 @@ def fetch_price(url):
             return price_element.text.strip()
     return None
 
-def update_excel(sheet_name, url, workbook):
+def update_excel(component_name, url, workbook):
     price = fetch_price(url)
-    if price:
-        today_date = datetime.now().strftime("%Y-%m-%d")
-        
-        if sheet_name in workbook.sheetnames:
-            sheet = workbook[sheet_name]
-        else:
-            sheet = workbook.create_sheet(sheet_name)
-            sheet.append(["Date", "Price"])
-        
-        date_found = False
-        for idx, row in enumerate(sheet.iter_rows(min_row=2, max_col=2, values_only=True), start=2):
-            if row[0] == today_date:
-                sheet.cell(row=idx, column=2, value=price)
-                date_found = True
-                print(f"Updated the price for {sheet_name} on {today_date}")
-                break
-        
-        if not date_found:
-            sheet.append([today_date, price])
-            print(f"Added new data for {sheet_name} on {today_date}")
+    if price is None:
+        print(f"Failed to fetch price for {component_name}")
+        return
+
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    sheet_name = "Prices"
+
+    # Création de la feuille si elle n'existe pas
+    if sheet_name in workbook.sheetnames:
+        sheet = workbook[sheet_name]
     else:
-        print(f"Failed to fetch price for {sheet_name}")
+        sheet = workbook.create_sheet(sheet_name)
+        sheet.append(["Date", component_name])
+
+    # Récupère les en-têtes (ligne 1)
+    headers = [cell.value for cell in sheet[1]]
+    if component_name not in headers:
+        headers.append(component_name)
+        sheet.cell(row=1, column=len(headers), value=component_name)
+
+    # Trouver l'index de la colonne du composant
+    col_idx = headers.index(component_name) + 1  # Excel = 1-based index
+
+    # Vérifie si la date existe déjà dans une ligne
+    date_found = False
+    for row in sheet.iter_rows(min_row=2, values_only=False):
+        if row[0].value == today_date:
+            row[col_idx - 1].value = price
+            date_found = True
+            print(f"Updated {component_name} price on {today_date}")
+            break
+
+    if not date_found:
+        new_row = [None] * len(headers)
+        new_row[0] = today_date
+        new_row[col_idx - 1] = price
+        sheet.append(new_row)
+        print(f"Added new row with {component_name} price on {today_date}")
 
 def main():
     excel_file = "DataBI/SMM/Solar_Prices.xlsx"
