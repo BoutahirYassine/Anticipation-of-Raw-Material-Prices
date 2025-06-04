@@ -13,36 +13,30 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 curl jq
+        sudo apt-get install -y wget unzip curl jq libnss3 libxss1
 
-    - name: Install Google Chrome (latest stable)
+    - name: Install latest stable Google Chrome
       run: |
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
 
-    - name: Install Google Chrome 137
-      run: |
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
+        # Force correct version in path
+        sudo rm -f /opt/google/chrome/chrome
+        sudo ln -s /usr/bin/google-chrome /opt/google/chrome/chrome
+
         google-chrome --version
 
-    - name: Download matching ChromeDriver
+    - name: Get matching ChromeDriver version and install it
       run: |
         CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
         DRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" \
           | jq -r --arg ver "$CHROME_VERSION" '.versions[] | select(.version | startswith($ver)) | .version' | head -n1)
 
-        echo "Found Chrome version: $CHROME_VERSION"
-        echo "Matching ChromeDriver version: $DRIVER_VERSION"
-
-        wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip"
-        unzip chromedriver-linux64.zip
-        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-        sudo chmod +x /usr/local/bin/chromedriver
-
+        echo "Chrome version: $CHROME_VERSION"
+        echo "ChromeDriver version: $DRIVER_VERSION"
 
         wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip"
         unzip chromedriver-linux64.zip
@@ -52,17 +46,17 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10.11'
+        python-version: '3.10'
 
-    - name: Install Python Dependencies
+    - name: Install Python requirements
       run: |
         pip install -r requirements.txt
 
-    - name: Run Selenium Script
+    - name: Run script
       run: |
         python3 EUR_USD_CNY.py
 
-    - name: Commit and push changes
+    - name: Commit and push results
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
