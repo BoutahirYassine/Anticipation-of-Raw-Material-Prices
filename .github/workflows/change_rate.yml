@@ -2,7 +2,7 @@ name: USD_CNY_EUR every 3 hours
 
 on:
   schedule:
-    - cron: "0 */3 * * *" 
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,31 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 || echo "Dependency installation fallback."
+        sudo apt-get install -y wget unzip xvfb libnss3 libxss1 curl jq
+
+    - name: Install Google Chrome (latest stable)
+      run: |
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
+
+    - name: Get Chrome version
+      id: get-chrome-version
+      run: |
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
+        echo "Chrome version: $CHROME_VERSION"
+        echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_ENV
+
+    - name: Download matching ChromeDriver
+      run: |
+        DRIVER_VERSION=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+        | jq -r --arg ver "$CHROME_VERSION" '.versions[] | select(.version | startswith($ver)) | .version' | head -n1)
+        
+        echo "Using ChromeDriver version: $DRIVER_VERSION"
+
+        wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${DRIVER_VERSION}/linux64/chromedriver-linux64.zip"
+        unzip chromedriver-linux64.zip
+        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+        sudo chmod +x /usr/local/bin/chromedriver
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,19 +51,10 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Set permissions for chromedriver
-      run: |
-        chmod +x ./chromedriver-linux64/chromedriver  # Adjust path if needed
-        echo $PWD
-
-    - name: Debug Chrome Version
-      run: google-chrome --version
-
     - name: Run Selenium Script
-      env:
-        PATH: ./chromedriver-linux64:$PATH
-      run: python3 EUR_USD_CNY.py
-      
+      run: |
+        python3 EUR_USD_CNY.py
+
     - name: Commit and push changes
       run: |
         git config --global user.name "github-actions[bot]"
