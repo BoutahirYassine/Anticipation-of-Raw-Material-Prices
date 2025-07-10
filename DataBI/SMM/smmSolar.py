@@ -72,8 +72,11 @@ def fetch_price(url):
                 price_element = price_element2
             
         # Find the parent div and extract the price MODULE
-        elif url == "https://www.metal.com/Solar/202403260002":
-            price_element = soup.find("span", class_="strong___3sC58")
+        elif url == "https://www.metal.com/Solar/202310160001":
+            price_div = soup.find("div", class_="price___2mpJr")
+            if price_div:
+                price_element = price_div
+                print(price_element)
         else:
             brut_section = soup.find('div', text='Original')
             if brut_section:
@@ -137,7 +140,7 @@ def main():
     update_excel("N-Type", "https://www.metal.com/Solar/202501060003", workbook)
     update_excel("N-type Wafer", "https://www.metal.com/Solar/202303220001", workbook) ##
     update_excel("Cell Topcon 183mm", "https://www.metal.com/en/prices/202210280001", workbook)
-    update_excel("Module Topcon 183mm", "https://www.metal.com/Solar/202403260002", workbook)
+    update_excel("Module Topcon 183mm", "https://www.metal.com/Solar/202310160001", workbook)
     update_excel("Silver Rear_side", "https://www.metal.com/Solar/202112230003", workbook)
     update_excel("Silver Busbar front-side", "https://www.metal.com/Solar/202112230004", workbook)
     update_excel("Silver finger front-side", "https://www.metal.com/Solar/202112230005", workbook)
