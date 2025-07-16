@@ -72,10 +72,13 @@ def fetch_price(url):
                 price_element = price_element2
             
         # Find the parent div and extract the price MODULE
-        elif url == "https://www.metal.com/Solar/202310160001":
-            price_div = soup.find("div", class_="price___2mpJr")
+        elif url == "https://www.metal.com/Solar/202310160001": 
+            price_div = soup.find('div', text='VAT included')
             if price_div:
-                price_element = price_div
+                # Remonter au parent pour récupérer la div avec la valeur
+                price_container = price_div.find_parent(class_='priceItem___gCrHz')
+                price_value = price_container.find('div', class_='price___2mpJr').text
+                price_element = price_value
                 print(price_element)
         else:
             brut_section = soup.find('div', text='Original')
