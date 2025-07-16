@@ -77,7 +77,7 @@ def fetch_price(url):
             if price_div:
                 # Remonter au parent pour récupérer la div avec la valeur
                 price_container = price_div.find_parent(class_='priceItem___gCrHz')
-                price_value = price_container.find('div', class_='price___2mpJr').text
+                price_value = price_container.find('div', class_='price___2mpJr')
                 price_element = price_value
                 print(price_element)
         else:
