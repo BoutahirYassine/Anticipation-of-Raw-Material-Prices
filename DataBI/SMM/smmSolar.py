@@ -27,6 +27,7 @@ from openpyxl import Workbook, load_workbook
 def fetch_price(url):
     response = requests.get(url)
     if response.status_code == 200:
+        
         soup = BeautifulSoup(response.content, 'html.parser')
         if url == "https://www.metal.com/Solar/202303220001":
             brut_section = soup.find('div', text='Original')
@@ -72,14 +73,18 @@ def fetch_price(url):
                 price_element = price_element2
             
         # Find the parent div and extract the price MODULE
+        
+        
+        
         elif url == "https://www.metal.com/Solar/202310160001": 
-            price_div = soup.find('div', text='VAT included')
-            if price_div:
-                # Remonter au parent pour récupérer la div avec la valeur
-                price_container = price_div.find_parent(class_='priceItem___gCrHz')
-                price_value = price_container.find('div', class_='price___2mpJr')
-                price_element = price_value
-                print(price_element)
+            
+            for item in soup.find_all("div", class_="priceItem___gCrHz"):
+                title_div = item.find("div", class_="title___2dUGb")
+                if title_div and title_div.text.strip() == "VAT included":
+                    price = item.find("div", class_="price___2mpJr")
+                    price_element = price
+                    print(price_element)
+                    
         else:
             brut_section = soup.find('div', text='Original')
             if brut_section:
